@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Healthcare App</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 50px;
+    }
+    table {
+      margin: auto;
+      background: white;
+      color: black;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    th, td {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🏥 Healthcare Patient Dashboard</h1>
+<button onclick="loadPatients()">Load Patients</button>
+
+<table id="table"></table>
+
+<script>
+function loadPatients() {
+  fetch('/patients')
+    .then(res => res.json())
+    .then(data => {
+      let html = "<tr><th>ID</th><th>Name</th><th>Age</th></tr>";
+      data.forEach(p => {
+        html += `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.age}</td></tr>`;
+      });
+      document.getElementById("table").innerHTML = html;
+    });
+}
+</script>
+
+</body>
+</html>

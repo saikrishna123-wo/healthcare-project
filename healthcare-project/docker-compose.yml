@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  app:
+    build: ./app
+    container_name: healthcare_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.6   # 🔥 MySQL ki badhulu lightweight MariaDB
+    container_name: healthcare_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: healthdb
+    ports:
+      - "3306:3306"
+
+  admin:
+    image: phpmyadmin:5   # 🔥 smaller image version
+    container_name: healthcare_admin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
